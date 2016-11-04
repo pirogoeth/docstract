@@ -10,13 +10,14 @@ FROM_ADDR=${MAILGUN_FROM_ADDR:-""}
 TO_ADDR=${MAILGUN_TO_ADDR:-""}
 SNIPPET_TEMPL=${SNIPPET_TEMPL:-"snippet-csharp.in"}
 
-CODE_BLOCK_NAME=$1;     shift
+CODE_BLOCK_NAME="csharp"
+
 SNIPPETS_DIR=$1;        shift
 OUTPUT_DIR=$1;          shift
 FILE_EXT=$1;            shift
 
-if [ -z "${CODE_BLOCK_NAME}" ] || [ -z "${SNIPPETS_DIR}" ] || [ -z "${OUTPUT_DIR}" ] ; then
-    echo "usage: $0: $0 [code block name] [snippets directory] [output directory]"
+if [ -z "${SNIPPETS_DIR}" ] || [ -z "${OUTPUT_DIR}" ] ; then
+    echo "usage: $0: $0 [snippets directory] [output directory]"
     exit 1
 fi
 
