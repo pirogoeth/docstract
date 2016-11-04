@@ -65,6 +65,18 @@ function doReplace() {
     rm ${OUTPUT_DIR%/}/*.in
 }
 
+function doSanitize() {
+    for file in $(ls ${OUTPUT_DIR%/}/*.${FILE_EXT})
+    do
+        printf " [+] Sanitizing %s with placeholder text\n" "${file}"
+        cat "${file}" | \
+            sed -e "s/${API_KEY}/YOUR_API_KEY/g" | \
+            sed -e "s/${DOMAIN}/YOUR_DOMAIN_NAME/g" | \
+            sed -e "s/${NEW_TEST_DOMAIN}/YOUR_NEW_DOMAIN_NAME/g" | \
+            sed -e "s/${USER}/YOU/g" > ${file%.*}.out
+    done
+}
+
 function doTemplate() {
     for file in $(ls ${OUTPUT_DIR%/}/*.out)
     do
@@ -92,7 +104,11 @@ function doIndent() {
     rm ${OUTPUT_DIR%/}/*.${FILE_EXT}~
 }
 
-extractSnippets
-doReplace
-doTemplate
-doIndent
+if [ -z "${JUST_SANITIZE}" ] ; then
+    extractSnippets
+    doReplace
+    doTemplate
+    doIndent
+else
+    doSanitize
+fi
