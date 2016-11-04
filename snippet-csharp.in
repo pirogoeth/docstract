@@ -1,0 +1,12 @@
+// vim: set ai et ts=4 sts=4 sw=4 syntax=csharp:
+
+using System;
+using System.IO;
+using RestSharp;
+using RestSharp.Authenticators;
+
+public class $CLASS_NAME {
+
+    $CLASS_BODY
+
+}
