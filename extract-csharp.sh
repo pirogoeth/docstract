@@ -10,6 +10,7 @@ FROM_ADDR=${MAILGUN_FROM_ADDR:-""}
 TO_ADDR=${MAILGUN_TO_ADDR:-""}
 SNIPPET_TEMPL=${SNIPPET_TEMPL:-"snippet-csharp.in"}
 
+NEW_TEST_DOMAIN="example.org"
 CODE_BLOCK_NAME="csharp"
 
 SNIPPETS_DIR=$1;        shift
@@ -37,7 +38,7 @@ fi
 function getClassName() {
     filename="${1##*/}"
 
-    echo "$(echo $filename | sed -e 's/\..*//' | sed -e 's/\b\(.\)/\u\1/g' | tr -d '-')Chunk"
+    echo "$(echo $filename | sed -e 's/\..*//' | sed -e 's/\b\(.\)/\u\1/g' | tr -d '-')"
 }
 
 function extractSnippets() {
@@ -56,6 +57,7 @@ function doReplace() {
         cat "${file}" | \
             sed -e "s/YOUR_API_KEY/${API_KEY}/g" | \
             sed -e "s/YOUR_DOMAIN_NAME/${DOMAIN}/g" | \
+            sed -e "s/YOUR_NEW_DOMAIN_NAME/${NEW_TEST_DOMAIN}/g" | \
             sed -e "s/YOU/${USER}/g" > ${file%.*}.out
     done
 
